@@ -395,6 +395,10 @@ defmodule Mongo.Ecto do
   end
 
   @doc false
+  def child_spec(repo, opts),
+    do: Supervisor.Spec.worker(Mongo.Ecto, [repo, opts], restart: :permanent)
+
+  @doc false
   def stop(pid, timeout) do
     ref = Process.monitor(pid)
     Process.exit(pid, :normal)
